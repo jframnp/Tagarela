@@ -1,10 +1,10 @@
-# 📄 Projeto Tagarela 2 - README
+# 📄 Projeto Tagarela - README
 
 ## Visão Geral do Projeto
-Bem-vindo ao **Tagarela 2**! 🎉 Este projeto tem como objetivo criar uma plataforma de comunicação moderna e eficiente, projetada para melhorar a interação e a troca de informações entre os usuários.
+Bem-vindo ao **Tagarela**! 🎉 Este projeto tem como objetivo criar uma plataforma de comunicação moderna e eficiente, projetada para melhorar a interação e a troca de informações entre os usuários.
 
 ## Objetivo do Projeto 🎯
-O **Tagarela 2** foi desenvolvido para facilitar a comunicação em diversos contextos, como ambientes acadêmicos, profissionais e sociais. A plataforma oferece ferramentas robustas que permitem aos usuários se comunicarem de maneira ágil e organizada.
+O **Tagarela** foi desenvolvido para facilitar a comunicação em diversos contextos, como ambientes acadêmicos, profissionais e sociais. A plataforma oferece ferramentas robustas que permitem aos usuários se comunicarem de maneira ágil e organizada.
 
 ## Funcionalidades Principais 🚀
 - **Interface Intuitiva:** Design simples e acessível, facilitando o uso por qualquer usuário.
@@ -32,4 +32,4 @@ Este documento também aborda:
 - **Casos de Uso:** Exemplos de como o Tagarela 2 pode ser utilizado em diferentes contextos.
 
 ## Conclusão
-O **Tagarela 2** é uma ferramenta versátil e poderosa, ideal para comunicação em ambientes acadêmicos e profissionais. Com uma interface amigável e recursos avançados, esta plataforma está pronta para atender às necessidades de seu grupo.
+O **Tagarela** é uma ferramenta versátil e poderosa, ideal para comunicação em ambientes acadêmicos e profissionais. Com uma interface amigável e recursos avançados, esta plataforma está pronta para atender às necessidades de seu grupo.
