@@ -19,7 +19,7 @@ O **Tagarela** foi desenvolvido para facilitar a comunicação em diversos conte
 - **Painel de Controle:** Personalização das configurações do usuário e gestão de preferências.
 - **Sistema de Notificações:** Envio de alertas em tempo real para manter os usuários informados.
 
-## Como Utilizar o Tagarela 2 📚
+## Como Utilizar o Tagarela  📚
 1. **Navegação Inicial:** Ao acessar a plataforma, você verá o painel principal com os canais disponíveis.
 2. **Participação nos Canais:** Escolha ou crie um canal para participar das discussões.
 3. **Envio de Mensagens:** Use a barra de texto na parte inferior da tela para compor e enviar suas mensagens.
