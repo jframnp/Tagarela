@@ -1,0 +1,29 @@
+.contato-section {
+    padding: 2rem;
+    background-color: #f8f0e3; 
+    text-align: center;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .contato-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contato-info, .social-media-info {
+    text-align: left;
+  }
+  
+  .social-media-icons img {
+    width: 40px;
+    margin: 0 10px;
+  }
+  
