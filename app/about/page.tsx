@@ -21,9 +21,11 @@ export default function AboutPage() {
             />
           </div>
           <div className="space-x-4">
-            <Link href="/" className="text-white hover:text-blue-200 transition-colors font-poppins">Home</Link>
+            <Link href="/home" className="text-white hover:text-blue-200 transition-colors font-poppins">Home</Link>
             <Link href="#mission" className="text-white hover:text-blue-200 transition-colors font-poppins">Nossa Missão</Link>
             <Link href="#team" className="text-white hover:text-blue-200 transition-colors font-poppins">Nossa Equipe</Link>
+            <Link href="#contatos" className="text-white hover:text-blue-200 transition-colors font-poppins">Contatos</Link>
+            <Link href="/login" className="text-white hover:text-blue-200 transition-colors font-poppins">Área do Usuário</Link>
           </div>
         </nav>
       </header>
@@ -65,11 +67,11 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold text-center text-purple-800 mb-8 font-poppins">Nossa Equipe</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { name: "Felipe Gasparino", role: "Frontend Developer", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/felipe-LtOLMtkvteTnkFSryHJFGe1zRsccCu.png" },
+              { name: "Felipe Gasparino", role: "GENIO", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/felipe-LtOLMtkvteTnkFSryHJFGe1zRsccCu.png" },
               { name: "João Francisco", role: "Full Stack Developer", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Joao-EM28b91KCQyxBjMndYPdKrHwfrt5sZ.png" },
               { name: "Enrico Spanier", role: "Database Specialist", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/enrico-UadsWK0hsOrmmEVwm8JXXwOazj0GmX.png" },
               { name: "Daniel", role: "Database Specialist", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Daniel-rpeMJIpaX36SMAtoLHwvirsHT2Casy.png" },
-              { name: "Luiza Sayori", role: "Frontend Blueprint Designer", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/luiza-BTqZcrWB58fhsWCxBtaulXMP2FIB3l.png" },
+              { name: "Luiza Sayuri", role: "Frontend Blueprint Designer", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/luiza-BTqZcrWB58fhsWCxBtaulXMP2FIB3l.png" },
               { name: "Maria Teresa", role: "Blueprint Designer", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/maria-ZfW839xeg3Itg46oJlpY9fHR7ApOyS.png" },
             ].map((member, index) => (
               <Card key={index}>
