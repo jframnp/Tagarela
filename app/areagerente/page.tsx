@@ -7,7 +7,7 @@ import { Bell, MessageSquare, User, Users, Baby, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import Label from "@/components/ui/label"
 
 // Mock data for schools
 const schools = [
