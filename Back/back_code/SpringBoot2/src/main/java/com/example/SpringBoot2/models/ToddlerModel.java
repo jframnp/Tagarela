@@ -1,7 +1,8 @@
 package com.example.SpringBoot2.models;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -19,7 +20,19 @@ public class ToddlerModel implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idToddler;
     private String name;
-    private BigDecimal value;
+    private String gender;
+    private LocalDate birthDate;
+    private Integer RG;
+    private Integer CPF;
+    private Integer guardiansRG;
+    private String BloodType;
+    private String Allergy;
+    private boolean Can_TCLE;
+    private UUID ClassId;
+    private UUID forms;
+    private LocalDateTime CreatedAt = LocalDateTime.now();
+
+
     public UUID getIdToddler() {
         return idToddler;
     }
@@ -32,12 +45,68 @@ public class ToddlerModel implements Serializable{
     public void setName(String name) {
         this.name = name;
     }
-    public BigDecimal getValue() {
-        return value;
+    public String getGender() {
+        return gender;
     }
-    public void setValue(BigDecimal value) {
-        this.value = value;
+    public void setGender(String gender){
+        this.gender = gender;
     }
-
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+    public Integer getRG() {
+        return RG;
+    }
+    public void setRG(Integer RG) {
+        this.RG = RG;
+    }
+    public Integer getCPF() {
+        return CPF;
+    }
+    public void setCPF(Integer CPF) {
+        this.CPF = CPF;
+    }
+    public Integer getGuardiansRG() {
+        return guardiansRG;
+    }
+    public void setGuardiansRG(Integer guardiansRG) {
+        this.guardiansRG = guardiansRG;
+    }
+    public String getBloodType() {
+        return BloodType;
+    }
+    public void setBloodType(String BloodType) {
+        this.BloodType = BloodType;
+    }
+    public String getAllergy() {
+        return Allergy;
+    }
+    public void setAllergy(String Allergy) {
+        this.Allergy = Allergy;
+    }
+    public boolean isCan_TCLE() {
+        return Can_TCLE;
+    }
+    public void setCan_TCLE(boolean Can_TCLE) {
+        this.Can_TCLE = Can_TCLE;
+    }
+    public LocalDateTime getCreatedAt() {
+        return CreatedAt;
+    }
+    public UUID getForms() {
+        return forms;
+    }
+    public void setForms(UUID forms) {
+        this.forms = forms;
+    }
+    public UUID getClassId() {
+        return ClassId;
+    }
+    public void setClassId(UUID classId) {
+        ClassId = classId;
+    }
     
 }
