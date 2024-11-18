@@ -1,23 +1,43 @@
-import { useState, useEffect } from 'react'
+"use client"
+import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { LogOut } from 'lucide-react'
-import Link from 'next/link' // Importe o Link
+import Link from 'next/link'
+import axios from 'axios';
 
 export default function LoginArea() {
   const [isLogin, setIsLogin] = useState(true)
-  const [email, setEmail] = useState('')
+  const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
-  const [name, setName] = useState('')
 
   const toggleMode = () => setIsLogin(!isLogin)
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('Form submitted', { email, password, name })
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (login.trim() === '' || password.trim() === '') {
+      alert('Por favor, preencha todos os campos.');
+      return;
+    }
+  
+    console.log('Form submitted', { login, password });
+  
+    try {
+      const response = await axios.post('http://localhost:8080/manager/login', {
+        login,
+        password,
+      });
+      console.log('Resposta da API:', response.data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Erro ao conectar à API:', error.message);
+      } else {
+        console.error('Erro inesperado:', error);
+      }
+    }
   };
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 p-4 transition-colors duration-500 relative overflow-hidden">
@@ -35,9 +55,9 @@ export default function LoginArea() {
       </div>
 
       {/* Retornar button */}
-      <Link href="/home">  {/* Envolva com o Link */}
-        <button className="flex absolute top-4 left-4 text-sm py-2 px-4 font-medium  text-white border-none rounded-md cursor-pointer overflow-hidden transition-all duration-500 ease-in-out  focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 dark:hover:bg-blue-700">
-          <div className="flex justify-around" >
+      <Link href="/home">
+        <button className="flex absolute top-4 left-4 text-sm py-2 px-4 font-medium text-white border-none rounded-md cursor-pointer overflow-hidden transition-all duration-500 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 dark:hover:bg-blue-700">
+          <div className="flex justify-around">
             <LogOut />
           </div>
         </button>
@@ -45,13 +65,7 @@ export default function LoginArea() {
 
       <Card className="w-full max-w-md overflow-hidden relative z-10">
         <CardContent className="p-6">
-          <div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="text-center mb-8"
-          >
+          <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-purple-600 dark:text-purple-300 mb-2 font-poppins">
               Login
             </h2>
@@ -62,24 +76,22 @@ export default function LoginArea() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              placeholder="email"
+              id="login"
+              onChange={(e) => setLogin(e.target.value)}
               className="w-full bg-blue-50 dark:bg-blue-800 border-purple-300 dark:border-purple-600 focus:border-purple-500 dark:focus:border-purple-400 text-purple-800 dark:text-purple-200 placeholder-purple-400 dark:placeholder-purple-500"
             />
             <Input
               type="password"
               placeholder="Senha"
+              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full bg-blue-50 dark:bg-blue-800 border-purple-300 dark:border-purple-600 focus:border-purple-500 dark:focus:border-purple-400 text-purple-800 dark:text-purple-200 placeholder-purple-400 dark:placeholder-purple-500"
             />
-            <Button
-              type="submit"
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white font-poppins transition-colors duration-300"
-            >
-              Entrar
+            <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white font-poppins transition-colors duration-300">
+              Enviar
             </Button>
           </form>
 
@@ -96,5 +108,4 @@ export default function LoginArea() {
       </Card>
     </div>
   );
-};
-
+}
