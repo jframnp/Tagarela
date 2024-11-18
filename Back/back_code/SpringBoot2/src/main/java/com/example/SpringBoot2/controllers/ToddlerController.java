@@ -25,23 +25,23 @@ public class ToddlerController {
 
     // Endpoint para cadastro
     @PostMapping("/register")
-    public ResponseEntity<Object> registerToddler(@RequestBody @Valid ToddlerRecordDto toddlerRecordDto) {
-        if (toddlerRepository.existsByRg(toddlerRecordDto.getRG())) {
+    public ResponseEntity<Object> registerToddler(@RequestBody @Valid ToddlerModel ToddlerModel) {
+        if (toddlerRepository.existsByRg(ToddlerModel.getRG())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Este RG já está em uso.");
         }
         var toddlerModel = new ToddlerModel();
-        BeanUtils.copyProperties(toddlerRecordDto, toddlerModel);
+        BeanUtils.copyProperties(ToddlerModel, toddlerModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(toddlerRepository.save(toddlerModel));
     }
 
     // Endpoint para salvar toddler
     @PostMapping
-    public ResponseEntity<Object> saveToddler(@RequestBody @Valid ToddlerRecordDto toddlerRecordDto) {
-        if (toddlerRepository.existsByRg(toddlerRecordDto.getRG())) {
+    public ResponseEntity<Object> saveToddler(@RequestBody @Valid ToddlerModel ToddlerModel) {
+        if (toddlerRepository.existsByRg(ToddlerModel.getRG())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Este RG já está em uso.");
         }
         var toddlerModel = new ToddlerModel();
-        BeanUtils.copyProperties(toddlerRecordDto, toddlerModel);
+        BeanUtils.copyProperties(ToddlerModel, toddlerModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(toddlerRepository.save(toddlerModel));
     }
 
