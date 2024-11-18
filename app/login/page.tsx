@@ -12,7 +12,7 @@ export default function LoginArea() {
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
 
-  const toggleMode = () => setIsLogin(!isLogin)
+  const toggleMode = () => setIsLogin(!isLogin);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,11 +37,10 @@ export default function LoginArea() {
         console.error('Erro inesperado:', error);
       }
     }
-  };
+}
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 p-4 transition-colors duration-500 relative overflow-hidden">
-      {/* Static smaller red "T" in the background */}
       <div 
         className="absolute inset-0 flex items-center justify-center overflow-hidden"
         style={{
@@ -61,6 +60,13 @@ export default function LoginArea() {
             <LogOut />
           </div>
         </button>
+      </Link>
+
+      {/* Botão temporário para acessar a área do gerente */}
+      <Link href="/areagerente">
+        <Button className="absolute top-4 right-4 text-sm py-2 px-4 font-medium text-white bg-red-500 hover:bg-red-600 rounded-md transition-colors duration-300">
+          Acessar Área do Gerente
+        </Button>
       </Link>
 
       <Card className="w-full max-w-md overflow-hidden relative z-10">
