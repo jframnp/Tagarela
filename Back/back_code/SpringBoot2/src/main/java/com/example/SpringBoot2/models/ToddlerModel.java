@@ -29,6 +29,8 @@ public class ToddlerModel implements Serializable {
     
     private LocalDate birthDate;
 
+    private int monthOfLife;
+
     private String BloodType;
     
     private String Allergy;
@@ -145,6 +147,11 @@ public class ToddlerModel implements Serializable {
     public UUID getClassId() {
         return ClassId;
     }
+
+    public int getMonth(){
+        return monthOfLife;
+    }
+
 
     public void setClassId(UUID classId) {
         ClassId = classId;
