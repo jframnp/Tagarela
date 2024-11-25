@@ -1,9 +1,13 @@
+'use client'
+
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Bell, User, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import Link from 'next/link'
+import Layout from '@/components/view/areagerente';
+
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
@@ -11,10 +15,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [userMenuVisible, setUserMenuVisible] = useState(false)
 
   const menuItems = [
-    { label: 'Página Inicial', href: '/dashboard/home' },
-    { label: 'Creches', href: '/dashboard/creches' },
-    { label: 'Relatórios', href: '/dashboard/relatorios' },
-    { label: 'Configurações', href: '/dashboard/configuracoes' },
+    { label: 'Página Inicial', href: '/areagerente/home' },
+    { label: 'Creches', href: '/areagerente/creches' },
+    { label: 'Relatórios', href: '/areagerente/relatorios' },
+    { label: 'Configurações', href: '/areagerente/configuracoes' },
   ]
 
   const handleLogout = () => {

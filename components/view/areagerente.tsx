@@ -2,14 +2,14 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Bell, User, Settings, LogOut, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Bell, User, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
-  const [isMenuExpanded, setIsMenuExpanded] = useState(true) // Controla se o menu está expandido
+  const [isMenuExpanded, setIsMenuExpanded] = useState(true) // Controls whether the menu is expanded
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   const menuItems = [
@@ -50,6 +50,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             variant="ghost"
             onClick={() => setIsMenuExpanded(!isMenuExpanded)}
             className="text-white"
+            aria-label={isMenuExpanded ? 'Minimize menu' : 'Expand menu'}
           >
             {isMenuExpanded ? <ChevronLeft /> : <ChevronRight />}
           </Button>
@@ -58,16 +59,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {/* Menu Items */}
         <nav className="flex-1 p-4 space-y-2">
           {menuItems.map((item) => (
-            <Button
-              key={item.label}
-              variant="ghost"
-              className={`block w-full text-left py-2 px-4 rounded hover:bg-purple-700 ${
-                isMenuExpanded ? 'text-base' : 'text-sm'
-              }`}
-              onClick={() => router.push(item.href)}
-            >
-              {isMenuExpanded ? item.label : item.label.charAt(0)}
-            </Button>
+            <Link key={item.label} href={item.href}>
+              <Button
+                variant="ghost"
+                className={`block w-full text-left py-2 px-4 rounded hover:bg-purple-700 ${
+                  isMenuExpanded ? 'text-base' : 'text-sm'
+                }`}
+                aria-label={item.label}
+              >
+                {isMenuExpanded ? item.label : item.label.charAt(0)}
+              </Button>
+            </Link>
           ))}
         </nav>
       </aside>
@@ -83,24 +85,30 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <User
                 className="h-6 w-6 cursor-pointer hover:text-blue-200 transition-colors"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                aria-label="User menu"
               />
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white text-black shadow-md rounded">
-                  <button
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                    onClick={() => router.push('/perfil')}
-                  >
-                    Perfil
-                  </button>
-                  <button
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                    onClick={() => router.push('/configuracoes')}
-                  >
-                    Configurações
-                  </button>
+                  <Link href="/perfil">
+                    <button
+                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                      aria-label="Profile"
+                    >
+                      Perfil
+                    </button>
+                  </Link>
+                  <Link href="/configuracoes">
+                    <button
+                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                      aria-label="Settings"
+                    >
+                      Configurações
+                    </button>
+                  </Link>
                   <button
                     className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
                     onClick={handleLogout}
+                    aria-label="Logout"
                   >
                     Sair
                   </button>

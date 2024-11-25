@@ -1,3 +1,6 @@
+'use client'
+
+
 import { useState } from 'react';
 import Image from 'next/image';
 import { Bell, MessageSquare, User, Download } from 'lucide-react';
