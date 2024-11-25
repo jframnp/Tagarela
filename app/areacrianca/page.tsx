@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import Image from 'next/image';
 import { Bell, MessageSquare, User, Download } from 'lucide-react';
@@ -33,9 +31,7 @@ export default function ChildProfile() {
           {['PÁGINA INICIAL', 'QUESTIONÁRIOS'].map((tab) => (
             <button
               key={tab}
-              className={`font-semibold ${
-                activeTab === tab ? 'text-blue-200 underline' : 'text-white'
-              }`}
+              className={`font-semibold ${activeTab === tab ? 'text-blue-200 underline' : 'text-white'}`}
               onClick={() => setActiveTab(tab)}
             >
               {tab}
@@ -85,9 +81,9 @@ export default function ChildProfile() {
                       onChange={(e) => setSelectedChild(e.target.value)}
                     >
                       <option value="">Selecione uma criança</option>
-                      {children[selectedCreche]?.map((child) => (
-                        <option key={child} value={child}>
-                          {child}
+                      {children[selectedCreche]?.map((childName) => (
+                        <option key={childName} value={childName}>
+                          {childName}
                         </option>
                       ))}
                     </select>
