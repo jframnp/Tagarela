@@ -2,150 +2,117 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Bell, MessageSquare, User, Users, Baby, Plus } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import Label from "@/components/ui/label"
+import { Bell, User, Settings, LogOut, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import Image from 'next/image'
 
-// Mock data for schools
-const schools = [
-  { id: 1, name: 'Jardim da Alegria', employees: 5, toddlers: 20 },
-  { id: 2, name: 'Creche Arco-Íris', employees: 8, toddlers: 30 },
-  { id: 3, name: 'Pequenos Exploradores', employees: 6, toddlers: 25 },
-  { id: 4, name: 'Cantinho Feliz', employees: 7, toddlers: 28 },
-]
-
-export default function CrechesPage() {
-  const [activeTab, setActiveTab] = useState('CRECHES')
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedCreche, setSelectedCreche] = useState(null)
+export default function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
+  const [isMenuExpanded, setIsMenuExpanded] = useState(true) // Controla se o menu está expandido
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
-  const handleCrecheClick = (id: number) => {
-    router.push(`/areagerente/creche/${id}`)
-  }
+  const menuItems = [
+    { label: 'Página Inicial', href: '/home' },
+    { label: 'Creches', href: '/creches' },
+    { label: 'Relatórios', href: '/relatorios' },
+    { label: 'Configurações', href: '/configuracoes' },
+  ]
 
-  const handleAddChild = (crecheId: number) => {
-    setSelectedCreche(crecheId)
-    setIsModalOpen(true)
-  }
-
-  const handleSubmitChild = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Here you would typically send the data to your backend
-    console.log("Child added to creche:", selectedCreche)
-    setIsModalOpen(false)
+  const handleLogout = () => {
+    // Implement logout functionality here
+    router.push('/login')
   }
 
   return (
-    <div className="min-h-screen bg-blue-50 font-roboto">
-      <header className="bg-purple-600 p-4 flex justify-between items-center">
-        <nav className="space-x-4">
-          {['PÁGINA INICIAL', 'CRECHES'].map((tab) => (
+    <div className="flex h-screen bg-white dark:bg-gray-100">
+      {/* Sidebar */}
+      <aside
+        className={`${
+          isMenuExpanded ? 'w-64' : 'w-20'
+        } bg-purple-600 text-white flex flex-col transition-all duration-300`}
+      >
+        {/* Logo + Toggle */}
+        <div className="p-4 flex justify-between items-center">
+          <div
+            className="flex items-center space-x-3 cursor-pointer"
+            onClick={() => router.push('/home')}
+          >
+            <Image
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot_10-szLUwZBSxeostzWWqL6iQXnmatggY7.png"
+              alt="Tagarela Logo"
+              width={40}
+              height={40}
+            />
+            {isMenuExpanded && <span className="font-bold text-white text-xl">CRECHES</span>}
+          </div>
+          <Button
+            variant="ghost"
+            onClick={() => setIsMenuExpanded(!isMenuExpanded)}
+            className="text-white"
+          >
+            {isMenuExpanded ? <ChevronLeft /> : <ChevronRight />}
+          </Button>
+        </div>
+
+        {/* Menu Items */}
+        <nav className="flex-1 p-4 space-y-2">
+          {menuItems.map((item) => (
             <Button
-              key={tab}
+              key={item.label}
               variant="ghost"
-              className={`font-semibold text-white hover:bg-purple-700 hover:text-white transition-colors ${
-                activeTab === tab ? 'bg-purple-700' : ''
+              className={`block w-full text-left py-2 px-4 rounded hover:bg-purple-700 ${
+                isMenuExpanded ? 'text-base' : 'text-sm'
               }`}
-              onClick={() => {
-                if (tab === 'PÁGINA INICIAL') {
-                  router.push('/home')
-                } else {
-                  setActiveTab(tab)
-                }
-              }}
+              onClick={() => router.push(item.href)}
             >
-              {tab}
+              {isMenuExpanded ? item.label : item.label.charAt(0)}
             </Button>
           ))}
         </nav>
-        <div className="flex items-center space-x-4">
-          <Bell className="h-6 w-6 text-white cursor-pointer hover:text-blue-200 transition-colors" />
-          <MessageSquare className="h-6 w-6 text-white cursor-pointer hover:text-blue-200 transition-colors" />
-          <User className="h-6 w-6 text-white cursor-pointer hover:text-blue-200 transition-colors" />
-        </div>
-      </header>
+      </aside>
 
-      <main className="container mx-auto mt-8 p-4">
-        <h1 className="text-3xl font-bold mb-6 text-purple-800 font-poppins">Creches Cadastradas</h1>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {schools.map((school) => (
-            <div key={school.id} className="relative overflow-hidden group">
-              <Card className="h-full transition-all duration-300 ease-in-out transform group-hover:-translate-y-16">
-                <CardHeader>
-                  <CardTitle className="text-purple-800 font-poppins">{school.name}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600">Clique para ver detalhes</p>
-                </CardContent>
-              </Card>
-              <div className="absolute bottom-0 left-0 right-0 bg-purple-600 text-white p-4 transform translate-y-full transition-transform duration-300 ease-in-out group-hover:translate-y-0">
-                <div className="flex justify-between items-center mb-2">
-                  <div className="flex items-center">
-                    <Users className="mr-2" />
-                    <span>{school.employees} funcionários</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Baby className="mr-2" />
-                    <span>{school.toddlers} crianças</span>
-                  </div>
-                </div>
-                <div className="flex space-x-2">
-                  <Button 
-                    className="flex-1 bg-white text-purple-600 hover:bg-purple-100"
-                    onClick={() => handleCrecheClick(school.id)}
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col">
+        {/* Header */}
+        <header className="bg-purple-600 text-white flex justify-between items-center p-4">
+          <h1 className="text-lg font-bold">Dashboard</h1>
+          <div className="flex items-center space-x-4">
+            <Bell className="h-6 w-6 cursor-pointer hover:text-blue-200 transition-colors" />
+            <div className="relative">
+              <User
+                className="h-6 w-6 cursor-pointer hover:text-blue-200 transition-colors"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              />
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white text-black shadow-md rounded">
+                  <button
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                    onClick={() => router.push('/perfil')}
                   >
-                    Ver Detalhes
-                  </Button>
-                  <Button 
-                    className="bg-green-500 hover:bg-green-600"
-                    onClick={() => handleAddChild(school.id)}
+                    Perfil
+                  </button>
+                  <button
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                    onClick={() => router.push('/configuracoes')}
                   >
-                    <Plus className="mr-2 h-4 w-4" /> Adicionar Criança
-                  </Button>
+                    Configurações
+                  </button>
+                  <button
+                    className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
+                    onClick={handleLogout}
+                  >
+                    Sair
+                  </button>
                 </div>
-              </div>
+              )}
             </div>
-          ))}
-        </div>
-      </main>
+          </div>
+        </header>
 
-      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Adicionar Nova Criança</DialogTitle>
-          </DialogHeader>
-          <form onSubmit={handleSubmitChild}>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Nome
-                </Label>
-                <Input id="name" className="col-span-3" />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="age" className="text-right">
-                  Idade
-                </Label>
-                <Input id="age" type="number" className="col-span-3" />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="guardian" className="text-right">
-                  Responsável
-                </Label>
-                <Input id="guardian" className="col-span-3" />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit">Adicionar Criança</Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+        {/* Content */}
+        <main className="flex-1 p-6 overflow-y-auto">{children}</main>
+      </div>
     </div>
   )
 }
