@@ -28,6 +28,9 @@ public class ManagerController {
         if (managerRepository.existsByLogin(managerRecordDto.login())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Este login já está em uso.");
         }
+        if (managerRepository.existsByEmail(managerRecordDto.email())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Este email já está em uso.");
+        }
         var managerModel = new ManagerModel();
         BeanUtils.copyProperties(managerRecordDto, managerModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(managerRepository.save(managerModel));
@@ -46,6 +49,9 @@ public class ManagerController {
     // Endpoint para salvar manager
     @PostMapping("/manager")
     public ResponseEntity<ManagerModel> saveManager(@RequestBody @Valid ManagerRecordDto managerRecordDto) {
+        if (managerRepository.existsByEmail(managerRecordDto.email())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
         var managerModel = new ManagerModel();
         BeanUtils.copyProperties(managerRecordDto, managerModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(managerRepository.save(managerModel));
@@ -59,7 +65,7 @@ public class ManagerController {
 
     // Endpoint para obter um manager específico
     @GetMapping("/manager/{id}")
-    public ResponseEntity<Object> getOneManager(@PathVariable(value="id") UUID id) {
+    public ResponseEntity<Object> getOneManager(@PathVariable(value = "id") UUID id) {
         Optional<ManagerModel> manager = managerRepository.findById(id);
         if (manager.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Manager not found.");
@@ -69,11 +75,15 @@ public class ManagerController {
 
     // Endpoint para atualizar um manager
     @PutMapping("/manager/{id}")
-    public ResponseEntity<Object> updateManager(@PathVariable(value="id") UUID id,
+    public ResponseEntity<Object> updateManager(@PathVariable(value = "id") UUID id,
                                                 @RequestBody @Valid ManagerRecordDto managerRecordDto) {
         Optional<ManagerModel> manager = managerRepository.findById(id);
         if (manager.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Manager not found.");
+        }
+        if (managerRepository.existsByEmail(managerRecordDto.email()) &&
+            !manager.get().getEmail().equals(managerRecordDto.email())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Este email já está em uso.");
         }
         var managerModel = manager.get();
         BeanUtils.copyProperties(managerRecordDto, managerModel);
@@ -82,7 +92,7 @@ public class ManagerController {
 
     // Endpoint para deletar um manager
     @DeleteMapping("/manager/{id}")
-    public ResponseEntity<Object> deleteManager(@PathVariable(value="id") UUID id) {
+    public ResponseEntity<Object> deleteManager(@PathVariable(value = "id") UUID id) {
         Optional<ManagerModel> manager = managerRepository.findById(id);
         if (manager.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Manager not found.");

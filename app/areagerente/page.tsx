@@ -77,7 +77,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               
               {userMenuVisible && (
                 <div className="absolute top-10 right-0 bg-white text-purple-700 rounded-lg shadow-lg p-2 w-48">
-                  <Link href="/dashboard/perfil">
+                  <Link href="/areagerente/perfil-funcionario">
                     <div className="py-2 px-4 hover:bg-purple-200 rounded">Perfil</div>
                   </Link>
                   <div 

@@ -24,6 +24,7 @@ public class ManagerModel implements Serializable {
     private String cpf;          
     private String login;        
     private String password;     
+    private String email;        
 
     public UUID getIdManager() {
         return IdManager;
@@ -79,5 +80,13 @@ public class ManagerModel implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
