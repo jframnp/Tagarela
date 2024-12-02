@@ -2,98 +2,121 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Bell, User, ChevronLeft, ChevronRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import Image from 'next/image'
-import Link from 'next/link'
-import Layout from '@/components/view/areagerente';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Users, Baby, School, FileText } from "lucide-react"
+import Layout from '@/components/view/areagerente'
 
-
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const router = useRouter()
-  const [isMenuExpanded, setIsMenuExpanded] = useState(true)
-  const [userMenuVisible, setUserMenuVisible] = useState(false)
-
-  const menuItems = [
-    { label: 'Página Inicial', href: '/areagerente/home' },
-    { label: 'Creches', href: '/areagerente/creches' },
-    { label: 'Relatórios', href: '/areagerente/relatorios' },
-    { label: 'Configurações', href: '/areagerente/configuracoes' },
+// Mock data para exemplo
+const dashboardData = {
+  totalCreches: 4,
+  totalCriancas: 120,
+  totalFuncionarios: 25,
+  totalRelatorios: 45,
+  crechesMaisRecentes: [
+    { id: 1, nome: 'Jardim da Alegria', criancas: 30 },
+    { id: 2, nome: 'Creche Arco-Íris', criancas: 25 },
+    { id: 3, nome: 'Pequenos Exploradores', criancas: 35 },
+  ],
+  relatoriosRecentes: [
+    { id: 1, creche: 'Jardim da Alegria', data: '2024-03-15', tipo: 'Comportamento' },
+    { id: 2, creche: 'Creche Arco-Íris', data: '2024-03-14', tipo: 'Desenvolvimento' },
+    { id: 3, creche: 'Pequenos Exploradores', data: '2024-03-13', tipo: 'Outros' },
   ]
+}
 
-  const handleLogout = () => {
-    localStorage.removeItem('authToken')
-    router.push('/login') // Redireciona para a página de login
-  }
+export default function DashboardPage() {
+  const router = useRouter()
 
   return (
-    <div className="flex h-screen bg-white dark:bg-gray-100">
-      <aside className={`${isMenuExpanded ? 'w-64' : 'w-20'} bg-purple-600 text-white flex flex-col transition-all duration-300`}>
-        <div className="p-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot_10-szLUwZBSxeostzWWqL6iQXnmatggY7.png"
-              alt="Tagarela Logo"
-              width={40}
-              height={40}
-            />
-            {isMenuExpanded && <span className="font-bold text-white text-xl">CRECHES</span>}
-          </div>
-          <Button
-            variant="ghost"
-            onClick={() => setIsMenuExpanded(!isMenuExpanded)}
-            className="text-white"
-          >
-            {isMenuExpanded ? <ChevronLeft /> : <ChevronRight />}
-          </Button>
-        </div>
-        <nav className="flex-1 p-4 space-y-2">
-          {menuItems.map((item) => (
-            <Button
-              key={item.label}
-              variant="ghost"
-              className="block w-full text-left py-2 px-4 rounded hover:bg-purple-700"
-              onClick={() => router.push(item.href)}
-            >
-              {isMenuExpanded ? item.label : item.label.charAt(0)}
-            </Button>
-          ))}
-        </nav>
-      </aside>
+    <div className="min-h-screen bg-blue-50 font-roboto">
+      <Layout>
+        <main className="flex-1 p-6 overflow-y-auto">
+          <h1 className="text-3xl font-bold mb-6 text-purple-800">Dashboard</h1>
 
-      <div className="flex-1 flex flex-col">
-        <header className="bg-purple-600 text-white flex justify-between items-center p-4">
-          <h1 className="text-lg font-bold">Dashboard</h1>
-          <div className="relative flex items-center space-x-4">
-            <Bell className="h-6 w-6 cursor-pointer hover:text-blue-200 transition-colors" />
-            
-            <div className="relative">
-              <button
-                onClick={() => setUserMenuVisible(!userMenuVisible)}
-                className="p-2 bg-purple-600 rounded-full hover:bg-purple-500"
-              >
-                <User className="h-6 w-6 cursor-pointer" />
-              </button>
-              
-              {userMenuVisible && (
-                <div className="absolute top-10 right-0 bg-white text-purple-700 rounded-lg shadow-lg p-2 w-48">
-                  <Link href="/areagerente/perfil-funcionario">
-                    <div className="py-2 px-4 hover:bg-purple-200 rounded">Perfil</div>
-                  </Link>
-                  <div 
-                    onClick={handleLogout}
-                    className="py-2 px-4 hover:bg-purple-200 rounded cursor-pointer"
-                  >
-                    Sair
-                  </div>
+          {/* Cards de Estatísticas */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="flex items-center p-6">
+                <School className="h-12 w-12 text-purple-600 mr-4" />
+                <div>
+                  <p className="text-sm text-gray-600">Total de Creches</p>
+                  <p className="text-2xl font-bold text-purple-800">{dashboardData.totalCreches}</p>
                 </div>
-              )}
-            </div>
-          </div>
-        </header>
+              </CardContent>
+            </Card>
 
-        <main className="flex-1 p-6 overflow-y-auto">{children}</main>
-      </div>
+            <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="flex items-center p-6">
+                <Baby className="h-12 w-12 text-purple-600 mr-4" />
+                <div>
+                  <p className="text-sm text-gray-600">Total de Crianças</p>
+                  <p className="text-2xl font-bold text-purple-800">{dashboardData.totalCriancas}</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="flex items-center p-6">
+                <Users className="h-12 w-12 text-purple-600 mr-4" />
+                <div>
+                  <p className="text-sm text-gray-600">Total de Funcionários</p>
+                  <p className="text-2xl font-bold text-purple-800">{dashboardData.totalFuncionarios}</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="flex items-center p-6">
+                <FileText className="h-12 w-12 text-purple-600 mr-4" />
+                <div>
+                  <p className="text-sm text-gray-600">Total de Relatórios</p>
+                  <p className="text-2xl font-bold text-purple-800">{dashboardData.totalRelatorios}</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Seções de Informações */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Creches Recentes */}
+            <Card className="bg-white shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-xl text-purple-800">Creches Mais Recentes</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {dashboardData.crechesMaisRecentes.map((creche) => (
+                    <div key={creche.id} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                      <span className="font-medium text-gray-700">{creche.nome}</span>
+                      <span className="text-sm text-gray-600">{creche.criancas} crianças</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Relatórios Recentes */}
+            <Card className="bg-white shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-xl text-purple-800">Relatórios Recentes</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {dashboardData.relatoriosRecentes.map((relatorio) => (
+                    <div key={relatorio.id} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                      <div>
+                        <p className="font-medium text-gray-700">{relatorio.creche}</p>
+                        <p className="text-sm text-gray-600">{relatorio.tipo}</p>
+                      </div>
+                      <span className="text-sm text-gray-600">{relatorio.data}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </main>
+      </Layout>
     </div>
   )
 }
