@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import { ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
 
 export default function LoginArea() {
   const [isLogin, setIsLogin] = useState(true)
@@ -42,111 +44,49 @@ export default function LoginArea() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
+  
     try {
       if (isLogin) {
-        // Lógica de login (mantida como está, pois já está funcionando)
-        const loginFormatado = login.trim()
-        const senhaFormatada = password.trim()
-
-        if (!loginFormatado || !senhaFormatada) {
-          showPrompt('Por favor, preencha todos os campos')
-          return
-        }
-
-        const dadosLogin = {
-          login: loginFormatado,
-          password: senhaFormatada
-        }
-
-        console.log('Tentando login com:', dadosLogin)
-
-        const response = await fetch('http://localhost:8080/manager/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(dadosLogin)
-        })
-
-        const textoResposta = await response.text()
-        console.log('Resposta completa:', {
-          status: response.status,
-          texto: textoResposta
-        })
-
-        if (response.status === 401) {
-          showPrompt('Login ou senha incorretos. Por favor, verifique suas credenciais.')
-          return
-        }
-
-        if (response.ok) {
-          try {
-            const data = JSON.parse(textoResposta)
-            if (data.token) {
-              localStorage.setItem('token', data.token)
-              showPrompt('Login bem-sucedido!')
-              router.push('/areagerente')
-            } else {
-              showPrompt('Token não encontrado na resposta')
-            }
-          } catch (e) {
-            showPrompt('Erro ao processar resposta do servidor')
-          }
-        }
-      } else {
-        // Lógica de cadastro atualizada
-        // Validação dos campos
-        if (!name || !rg || !cpf || !login || !email || !password) {
-          showPrompt('Por favor, preencha todos os campos')
-          return
-        }
-
-        const dadosCadastro = {
-          name: name.trim(),
-          rg: rg.trim(),
-          cpf: cpf.trim(),
-          login: login.trim(),
-          email: email.trim(),
-          password: password.trim()
-        }
-
-        console.log('Dados de cadastro sendo enviados:', dadosCadastro)
-
-        const response = await fetch('http://localhost:8080/manager/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(dadosCadastro)
-        })
-
-        console.log('Status da resposta de cadastro:', response.status)
-        
-        const textoRespostaCadastro = await response.text()
-        console.log('Resposta do cadastro:', textoRespostaCadastro)
-
-        if (response.ok) {
-          showPrompt('Cadastro realizado com sucesso!')
-          setIsLogin(true) // Volta para a tela de login
+        const response = await api.post('/manager/login', {
+          login: login,
+          password: password
+        });
+  
+        if (response.status === 200) {
+          showPrompt('Login bem-sucedido!')
+          router.push('/areagerente')
         } else {
-          try {
-            const errorData = JSON.parse(textoRespostaCadastro)
-            showPrompt(errorData.message || 'Erro ao cadastrar. Tente novamente.')
-          } catch (e) {
-            showPrompt(textoRespostaCadastro || 'Erro ao cadastrar. Tente novamente.')
-          }
+          showPrompt('Login inválido. Verifique suas credenciais.')
         }
       }
+      // ... resto do código
     } catch (error) {
-      console.error('Erro completo:', error)
-      showPrompt('Erro ao processar a requisição. Tente novamente.')
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          showPrompt('Login ou senha incorretos.')
+        } else {
+          showPrompt('Erro ao conectar à API. Tente novamente.')
+        }
+        console.error('Erro ao conectar à API:', error.message)
+      } else {
+        showPrompt('Erro inesperado. Tente novamente.')
+        console.error('Erro inesperado:', error)
+      }
     }
   }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 p-4 transition-colors duration-500 relative overflow-hidden">
+      {/* Botão de voltar para home */}
+      <Link href="/" className="absolute top-4 left-4 z-20">
+        <Button
+          variant="ghost"
+          className="rounded-full p-3 hover:bg-purple-200 dark:hover:bg-purple-800 transition-colors"
+        >
+          <ArrowLeft className="h-6 w-6 text-purple-600 dark:text-purple-300" />
+        </Button>
+      </Link>
+
       {/* Fundo decorativo com "T" */}
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden" style={{ transform: 'rotate(45deg)', zIndex: 0 }}>
         <span className="text-red-500 text-[45vw] font-bold opacity-5 select-none">T</span>

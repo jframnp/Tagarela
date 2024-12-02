@@ -70,7 +70,7 @@ export default function TagarelaLandingPage() {
               width={40}
               height={40}
             />
-            <span className="text-white text-2xl font-bold font-poppins">Tagarela</span>
+            <a className="text-white text-2xl font-bold font-poppins" href="/home">Tagarela</a>
           </div>
           <div className="space-x-4">
             <Link href="/about" className="text-white hover:text-blue-200 transition-colors font-poppins">Sobre Nós</Link>
@@ -103,29 +103,6 @@ export default function TagarelaLandingPage() {
               </Card>
             ))}
           </div>
-        </section>
-
-        <section id="contact-section" className="mb-12" aria-labelledby="contact-heading">
-          <h2 id="contact-heading" className="text-3xl font-bold text-center text-purple-800 mb-8 font-poppins">Entre em Contato</h2>
-          <Card>
-            <CardContent className="p-6">
-              <form className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-purple-700 mb-1">Nome</label>
-                  <Input id="name" placeholder="Seu nome" />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-purple-700 mb-1">Email</label>
-                  <Input id="email" type="email" placeholder="seu@email.com" />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-purple-700 mb-1">Mensagem</label>
-                  <Textarea id="message" placeholder="Sua mensagem" rows={4} />
-                </div>
-                <Button type="submit" className="w-full bg-purple-500 hover:bg-purple-600 text-white font-poppins">Enviar</Button>
-              </form>
-            </CardContent>
-          </Card>
         </section>
       </main>
 
